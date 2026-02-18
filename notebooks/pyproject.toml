@@ -1,0 +1,12 @@
+[project]
+name = "rag-notebooks"
+version = "0.1.0"
+description = "Jupyter notebooks for the RAG workshop — data ingestion, chunking, retrieval, and embedding experiments."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "jupyter>=1.0.0",
+    "ipykernel>=6.29.0",
+    "qdrant-client>=1.7.0",
+    "sentence-transformers>=2.3.0",
+]
