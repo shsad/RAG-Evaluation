@@ -9,4 +9,8 @@ dependencies = [
     "ipykernel>=6.29.0",
     "qdrant-client>=1.7.0",
     "sentence-transformers>=2.3.0",
+    "openai>=2.21.0",
+    "dotenv>=0.9.9",
+    "docling>=2.74.0",
+    "matplotlib>=3.10.8",
 ]
