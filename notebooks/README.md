@@ -43,6 +43,7 @@ After the notebook creates `.env`, edit `notebooks/.env`:
 
 ```env
 OPENAI_API_KEY=your_real_key_here
+OPENAI_API_BASE=https://api.aisc.hpi.de/
 ```
 
 Then rerun the API key validation cell in `00_setup.ipynb`.
