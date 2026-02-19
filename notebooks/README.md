@@ -24,6 +24,18 @@ source .venv/bin/activate
 uv sync
 ```
 
+Optional extras for OCR/VLM:
+
+- Normal users (VLM support):
+```bash
+uv sync --extra vlm
+```
+
+- Mac users (Apple Silicon, OCRMac + VLM):
+```bash
+uv sync --extra mac_vlm
+```
+
 ## 2) Open and run `00_setup.ipynb`
 
 - Open `notebooks/00_setup.ipynb` in VS Code or Jupyter Lab.
@@ -84,3 +96,16 @@ Qdrant start fails:
 
 After setup completes, continue with:
 - `notebooks/01_chunking_and_retrieval.ipynb`
+
+## OCR notebook
+
+For OCR comparison on scanned/non-machine-readable PDFs (tables + math), use:
+- `notebooks/04_ocr_docling_vlm_comparison.ipynb`
+
+It compares:
+- Docling OCR (RapidOCR / optional OCRMac for macOS)
+- Docling VLM pipeline
+- External VLM via LiteLLM
+
+Input PDF in this workshop:
+- `notebooks/raw_data/lstm.pdf`
