@@ -38,6 +38,7 @@ MANIFEST
 # Environment variables
 .env
 .env.local
+./notebooks/.env
 
 # IDEs
 .vscode/
