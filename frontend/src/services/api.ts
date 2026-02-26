@@ -258,13 +258,17 @@ export interface OllamaStatus {
 
 export const getAvailableModels = async (): Promise<ModelInfo[]> => {
   try {
-    // Use trailing slash to avoid backend 307 redirect (/models -> /models/),
-    // which can cause browser/CORS issues in some setups.
-    const response = await api.get('/models/');
+    // Prefer /models (legacy clients), fallback to /models/ (strict-slash backends).
+    const response = await api.get('/models');
     return response.data.models;
-  } catch (error) {
-    console.error('Error fetching models:', error);
-    return [];
+  } catch (firstError) {
+    try {
+      const response = await api.get('/models/');
+      return response.data.models;
+    } catch (secondError) {
+      console.error('Error fetching models:', secondError || firstError);
+      return [];
+    }
   }
 };
 

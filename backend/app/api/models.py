@@ -37,6 +37,7 @@ class OllamaStatus(BaseModel):
     error: str | None = None
 
 
+@router.get("", include_in_schema=False)
 @router.get("/")
 async def get_models() -> Dict[str, Any]:
     """Get list of available Ollama models."""
