@@ -81,6 +81,15 @@ Visit http://localhost:3000
 
 > **Note**: The backend container connects to Ollama running on your host machine.
 > Ollama must be running before starting the containers.
+>
+> If your backend image defaults to `openai`, set these in `docker-compose.yml`:
+> ```yaml
+> environment:
+>   - LLM_PROVIDER=ollama
+>   - OLLAMA_HOST=host.docker.internal
+>   - OLLAMA_PORT=11434
+>   - OLLAMA_MODEL=qwen2.5:7b-instruct
+> ```
 
 #### Method 2: Automated Setup (Native)
 

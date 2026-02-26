@@ -15,32 +15,51 @@ Start with `00_setup.ipynb` to prepare everything you need:
 
 ## 1) Prepare the notebooks environment
 
+Preferred (repository-level `.venv-notebooks` + reusable Jupyter kernel):
+
 From the repository root:
 
 ```bash
-cd notebooks
-uv venv
-source .venv/bin/activate
-uv sync
+./scripts/setup_notebooks_kernel.sh
 ```
 
 Optional extras for OCR/VLM:
 
 - Normal users (VLM support):
 ```bash
-uv sync --extra vlm
+./scripts/setup_notebooks_kernel.sh --extra vlm
 ```
 
 - Mac users (Apple Silicon, OCRMac + VLM):
 ```bash
-uv sync --extra mac_vlm
+./scripts/setup_notebooks_kernel.sh --extra mac_vlm
+```
+
+This will:
+1. Create/use `./.venv-notebooks` in the repository root.
+2. Install dependencies from `notebooks/pyproject.toml` into that root environment.
+3. Register a Jupyter kernel named `workshop-ragv2` (display name `Python (workshop-ragV2)`).
+
+Legacy/local notebooks-only environment (still supported):
+
+Open folder `notebooks/` in VS Code, then run:
+
+```bash
+uv venv
+source .venv/bin/activate
+uv sync
 ```
 
 ## 2) Open and run `00_setup.ipynb`
 
-- Open `notebooks/00_setup.ipynb` in VS Code or Jupyter Lab.
-- Select the interpreter/kernel from `notebooks/.venv` (or let VS Code auto-detect it after `uv sync`).
-- Run cells top to bottom.
+Open `notebooks/00_setup.ipynb` in VS Code.
+
+In the top-right of the notebook:
+1. Click `Select Kernel`.
+2. Click `Jupyter Kernel...`.
+3. Pick `Python (workshop-ragV2)` (`.venv-notebooks/bin/python`).
+
+Then run the cells from top to bottom.
 
 What the notebook does:
 1. Creates `notebooks/.env` if missing.
@@ -78,11 +97,10 @@ docker start qdrant
 Kernel/interpreter does not appear:
 
 ```bash
-cd notebooks
-uv sync
+./scripts/setup_notebooks_kernel.sh --skip-sync
 ```
 
-Then reload VS Code and select the Python interpreter from `notebooks/.venv`.
+Then reload VS Code and select kernel `Python (workshop-ragV2)`.
 
 `uv: command not found`:
 - Install uv, then restart your terminal.
