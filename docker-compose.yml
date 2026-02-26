@@ -22,6 +22,8 @@ services:
       - QDRANT_PORT=6333
       - OLLAMA_HOST=host.docker.internal
       - OLLAMA_PORT=11434
+      - DATA_FOLDER=/app/data
+      - CHAT_HISTORY_FOLDER=/app/chat_history
       # - OLLAMA_MODEL=qwen2.5:7b-instruct
     extra_hosts:
       - "host.docker.internal:host-gateway"
