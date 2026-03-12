@@ -1,6 +1,5 @@
 # Virtual Environment
 .venv/
-.venv-notebooks/
 venv/
 env/
 ENV/
@@ -8,6 +7,7 @@ ENV/
 # Data folders (for testing)
 data/
 todo/
+tmp/
 
 # Python
 __pycache__/
@@ -39,7 +39,6 @@ MANIFEST
 # Environment variables
 .env
 .env.local
-./notebooks/.env
 
 # IDEs
 .vscode/
