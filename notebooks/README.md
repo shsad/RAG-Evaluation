@@ -1,11 +1,15 @@
 # Notebooks Quickstart
 
-This folder contains workshop notebooks.
+This folder contains notebooks for two workshops:
+
+- **Workshop 2 — RAG Fundamentals:** chunking, retrieval, embeddings, OCR
+- **Workshop 3 — RAG Evaluation:** RAGAS metrics, retrieval & generation evaluation
 
 Start with `00_setup.ipynb` to prepare everything you need:
 - API key config in `notebooks/.env`
 - Python environment via `uv sync`
 - Local Qdrant via Docker
+- API connection test (Embeddings + Generation)
 
 ## Prerequisites
 
@@ -64,9 +68,9 @@ Then run the cells from top to bottom.
 What the notebook does:
 1. Creates `notebooks/.env` if missing.
 2. Validates that `OPENAI_API_KEY` is set.
-3. Runs `uv sync`.
-4. Starts or reuses a local Docker container named `qdrant`.
-5. Verifies Qdrant is reachable on `http://localhost:6333`.
+3. Starts or reuses a local Docker container named `qdrant`.
+4. Tests HPI API connection (Embeddings + Generation).
+5. Checks Workshop 3 data files (CSV + PDF).
 
 ## 3) Configure your API key
 
@@ -79,10 +83,31 @@ OPENAI_API_BASE=https://api.aisc.hpi.de/
 
 Then rerun the API key validation cell in `00_setup.ipynb`.
 
-## Qdrant checks
+## Workshop Notebooks
 
-Qdrant dashboard:
-- `http://localhost:6333/dashboard`
+### Workshop 2 — RAG Fundamentals
+
+| # | Notebook | Topic |
+|---|----------|-------|
+| 01 | `w2_01_chunking_and_retrieval.ipynb` | Chunking strategies and retrieval |
+| 02 | `w2_02_embedding_models.ipynb` | Embedding model comparison |
+| 03 | `w2_03_real_world_datentypen.ipynb` | Real-world data types |
+| 04 | `w2_04_ocr_docling_vlm_comparison.ipynb` | OCR: Docling vs VLM comparison |
+
+### Workshop 3 — RAG Evaluation with RAGAS
+
+| # | Notebook | Topic | Duration |
+|---|----------|-------|----------|
+| 01 | `w3_01_intro_end_to_end.ipynb` | End-to-end RAG + RAGAS intro on a simple website | 30 min |
+| 02 | `w3_02_ingestion.ipynb` | PDF → Docling → Chunks → Embeddings → Qdrant | 20 min |
+| 03 | `w3_03_retrieval_evaluation.ipynb` | Context Precision & Context Recall, TOP_K experiment | 40 min |
+| 04 | `w3_04_generation_evaluation.ipynb` | Answer Correctness & Faithfulness, prompt experiment | 40 min |
+
+Workshop 3 notebooks (02–04) share settings via `config.py`. See the config file for available parameters (dataset, chunking mode, embedding model, etc.).
+
+## Qdrant
+
+Dashboard: http://localhost:6333/dashboard
 
 Useful Docker commands:
 
@@ -110,20 +135,10 @@ Qdrant start fails:
 - Confirm port `6333` is free.
 - Check existing container state with `docker ps -a --filter name=qdrant`.
 
-## Next notebook
+**RAGAS `InstructorRetryException` / `max_tokens` errors:**
+- The evaluator LLM may need a higher `max_tokens` — especially reasoning models like `gpt-oss-120b`.
+- Increase `max_tokens` in the `llm_factory()` call (already set to 8192–65536 in notebooks 03/04).
 
-After setup completes, continue with:
-- `notebooks/01_chunking_and_retrieval.ipynb`
-
-## OCR notebook
-
-For OCR comparison on scanned/non-machine-readable PDFs (tables + math), use:
-- `notebooks/04_ocr_docling_vlm_comparison.ipynb`
-
-It compares:
-- Docling OCR (RapidOCR / optional OCRMac for macOS)
-- Docling VLM pipeline
-- External VLM via LiteLLM
-
-Input PDF in this workshop:
-- `notebooks/raw_data/lstm.pdf`
+**Embedding `batch_size` errors (413):**
+- `minilm-embedding` has a max batch size of 32 (configured in `config.py`).
+- If you add a new embedding model, add its constraints to the `_EMBED_MODELS` registry in `config.py`.
