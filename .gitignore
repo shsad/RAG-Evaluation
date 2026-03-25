@@ -6,6 +6,7 @@ ENV/
 
 # Data folders (for testing)
 data/
+!notebooks/data/
 todo/
 tmp/
 
@@ -85,3 +86,10 @@ models/
 
 # Data files
 uploads/
+
+# Workshop 3 notebooks (auto-generated plots)
+notebooks/figures/
+
+# Migration artifacts
+03_workshop/
+migration_to_ragv2_repo.md
