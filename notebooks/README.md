@@ -1,25 +1,23 @@
-# Notebooks Quickstart
+# Workshop Notebooks
 
-This folder contains notebooks for two workshops:
+This folder contains notebooks for two workshops. Setup is shared — pick your workshop below:
 
-- **Workshop 2 — RAG Fundamentals:** chunking, retrieval, embeddings, OCR
-- **Workshop 3 — RAG Evaluation:** RAGAS metrics, retrieval & generation evaluation
+| Workshop | Topic | Jump to |
+|----------|-------|---------|
+| **Workshop 2** | RAG Fundamentals — chunking, retrieval, embeddings, OCR | [Workshop 2 Notebooks](#workshop-2--rag-fundamentals) |
+| **Workshop 3** | RAG Evaluation — RAGAS metrics, retrieval & generation evaluation | [Workshop 3 Notebooks](#workshop-3--rag-evaluation-with-ragas) |
 
-Start with `00_setup.ipynb` to prepare everything you need:
-- API key config in `notebooks/.env`
-- Python environment via `uv sync`
-- Local Qdrant via Docker
-- API connection test (Embeddings + Generation)
+---
 
-## Prerequisites
+## Setup (both workshops)
+
+### Prerequisites
 
 - Python 3.10+
 - [`uv`](https://docs.astral.sh/uv/getting-started/installation/)
 - Docker (running)
 
-## 1) Prepare the notebooks environment
-
-Preferred (repository-level `.venv-notebooks` + reusable Jupyter kernel):
+### 1) Prepare the notebooks environment
 
 From the repository root:
 
@@ -27,15 +25,13 @@ From the repository root:
 ./scripts/setup_notebooks_kernel.sh
 ```
 
-Optional extras for OCR/VLM:
+Optional extras for OCR/VLM (Workshop 2 only):
 
-- Normal users (VLM support):
 ```bash
+# VLM support:
 ./scripts/setup_notebooks_kernel.sh --extra vlm
-```
 
-- Mac users (Apple Silicon, OCRMac + VLM):
-```bash
+# Mac users (Apple Silicon, OCRMac + VLM):
 ./scripts/setup_notebooks_kernel.sh --extra mac_vlm
 ```
 
@@ -44,7 +40,8 @@ This will:
 2. Install dependencies from `notebooks/pyproject.toml` into that root environment.
 3. Register a Jupyter kernel named `workshop-ragv2` (display name `Python (workshop-ragV2)`).
 
-Legacy/local notebooks-only environment (still supported):
+<details>
+<summary>Legacy/local notebooks-only environment (still supported)</summary>
 
 Open folder `notebooks/` in VS Code, then run:
 
@@ -53,8 +50,9 @@ uv venv
 source .venv/bin/activate
 uv sync
 ```
+</details>
 
-## 2) Open and run `00_setup.ipynb`
+### 2) Open and run `00_setup.ipynb`
 
 Open `notebooks/00_setup.ipynb` in VS Code.
 
@@ -72,7 +70,7 @@ What the notebook does:
 4. Tests HPI API connection (Embeddings + Generation).
 5. Checks Workshop 3 data files (CSV + PDF).
 
-## 3) Configure your API key
+### 3) Configure your API key
 
 After the notebook creates `.env`, edit `notebooks/.env`:
 
@@ -83,9 +81,11 @@ OPENAI_API_BASE=https://api.aisc.hpi.de/
 
 Then rerun the API key validation cell in `00_setup.ipynb`.
 
-## Workshop Notebooks
+---
 
-### Workshop 2 — RAG Fundamentals
+## Workshop 2 — RAG Fundamentals
+
+After completing the [Setup](#setup-both-workshops), work through these notebooks in order:
 
 | # | Notebook | Topic |
 |---|----------|-------|
@@ -94,7 +94,11 @@ Then rerun the API key validation cell in `00_setup.ipynb`.
 | 03 | `w2_03_real_world_datentypen.ipynb` | Real-world data types |
 | 04 | `w2_04_ocr_docling_vlm_comparison.ipynb` | OCR: Docling vs VLM comparison |
 
-### Workshop 3 — RAG Evaluation with RAGAS
+---
+
+## Workshop 3 — RAG Evaluation with RAGAS
+
+After completing the [Setup](#setup-both-workshops), work through these notebooks in order:
 
 | # | Notebook | Topic | Duration |
 |---|----------|-------|----------|
@@ -103,7 +107,9 @@ Then rerun the API key validation cell in `00_setup.ipynb`.
 | 03 | `w3_03_retrieval_evaluation.ipynb` | Context Precision & Context Recall, TOP_K experiment | 40 min |
 | 04 | `w3_04_generation_evaluation.ipynb` | Answer Correctness & Faithfulness, prompt experiment | 40 min |
 
-Workshop 3 notebooks (02–04) share settings via `config.py`. See the config file for available parameters (dataset, chunking mode, embedding model, etc.).
+Notebooks 02–04 share settings via `config.py`. See the config file for available parameters (dataset, chunking mode, embedding model, etc.).
+
+---
 
 ## Qdrant
 
@@ -119,7 +125,7 @@ docker start qdrant
 
 ## Troubleshooting
 
-Kernel/interpreter does not appear:
+**Kernel/interpreter does not appear:**
 
 ```bash
 ./scripts/setup_notebooks_kernel.sh --skip-sync
@@ -127,10 +133,10 @@ Kernel/interpreter does not appear:
 
 Then reload VS Code and select kernel `Python (workshop-ragV2)`.
 
-`uv: command not found`:
+**`uv: command not found`:**
 - Install uv, then restart your terminal.
 
-Qdrant start fails:
+**Qdrant start fails:**
 - Confirm Docker is running.
 - Confirm port `6333` is free.
 - Check existing container state with `docker ps -a --filter name=qdrant`.
